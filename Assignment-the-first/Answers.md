@@ -56,12 +56,12 @@ this is a known barcode, so it would go into a R1 R2 file
 [input R3](../TEST-input_FASTQ/R3_test.fq)
 [input R4](../TEST-input_FASTQ/R4_test.fq)
 
-[output R1](../TEST-input_FASTQ/TCTTCGAC_GTCGAAGA_R1.fq)
-[output R2](../TEST-input_FASTQ/TCTTCGAC_GTCGAAGA_R2.fq)  
-[output hopped R1](../TEST-input_FASTQ/testout_hopped_R1.fq)
-[output hopped R2](../TEST-input_FASTQ/testout_hopped_R2.fq)  
-[output unk R1](../TEST-input_FASTQ/testout_unk_R1.fq)
-[output unk R1](../TEST-input_FASTQ/testout_unk_R1.fq)
+[output R1](../TEST-output_FASTQ/TCTTCGAC_GTCGAAGA_R1.fq)
+[output R2](../TEST-output_FASTQ/TCTTCGAC_GTCGAAGA_R2.fq)  
+[output hopped R1](../TEST-output_FASTQ/testout_hopped_R1.fq)
+[output hopped R2](../TEST-output_FASTQ/testout_hopped_R2.fq)  
+[output unk R1](../TEST-output_FASTQ/testout_unk_R1.fq)
+[output unk R1](../TEST-output_FASTQ/testout_unk_R1.fq)
 
 
 4. Pseudocode
