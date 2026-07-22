@@ -81,7 +81,7 @@ with open (R2), with open (R3), with open(R1), with open(R4):
         readline for R2, R3, R1, and R4 and add to current record lists 
         add barcodes to ends of header lines 
         if len(current record) == 4: # we are at the end of a record 
-            if bioinfo.qualscore(qual line of barcode) is above cutoff: # check quality cuttoff first for barcode (set by histogram results)
+            if bioinfo.qualscore(qual line of barcodes (and possibly sequence lines)) is above cutoff: # check quality cuttoff first for barcode (set by histogram results)
                 if either barcode has 'N': # check if has N, then check if corrected compliment and in known barcodes
                     if corrected_revcomp(barcode1, barcode2) and in known barcodes: write seq to {barcodes}_R1.fastq and {barcodes}_R2.fastq and update dict
                     else: write seq to R1_unk.fastq and R2_unk.fastq and update dict
