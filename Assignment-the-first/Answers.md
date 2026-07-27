@@ -114,6 +114,9 @@ def reverse_compliment(seq: str) -> str:
     comp = ""
     return comp
 
+# input: ATCG
+# output: CGAT
+
 def corrected_revcomp(seq1: str, seq2: str) -> str: 
     """
     takes two sequences with 'N's and checks if they are reverse complimented 
@@ -122,6 +125,9 @@ def corrected_revcomp(seq1: str, seq2: str) -> str:
     """ 
     out = ""
     # iterate through each seq and if all the non-N bases match, it is reverse compliment
-    return out 
+    return out
+
+# input: NATCG, CGNTA
+# output: CGATA (corrected reverse compliment of the first seq passed)
      
 ```
