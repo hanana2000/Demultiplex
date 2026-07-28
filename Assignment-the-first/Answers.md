@@ -73,9 +73,9 @@ this is a known barcode, so it would go into a R1 R2 file
 # No file names should have Ns in them 
 
 list of known barcodes = []
-create_index_dict(list of indices) # itertools to create all possible combinations of barcodes
+permutedict = create_index_dict(list of indices) # itertools to create all possible combinations of barcodes
 
-def demultiplex(R1, R2, R3, R4): 
+def demultiplex(R1, R2, R3, R4, permutedict): 
     with open (R2), with open (R3), with open(R1), with open(R4): 
         
         hopped, known, unk = 0,0,0
@@ -168,13 +168,14 @@ def create_index_dict(indices: list) -> dict:
 # input: ATGC, GCTA
 # output: {(ATGC,GCTA): 0, (GCTA,ATGC): 0, (ATGC,ATGC): 0, (GCTA,GCTA): 0}
 
-def demultiplex(R1, R2, R3, R4): 
+def demultiplex(R1: str , R2: str, R3: str, R4: str, permutedict: dict) -> dict, dict: 
     """
     function that calls other functions and runs main program 
     returns a dict of paired indices populated with ints of instances
     also outputs a dict of instances of hopped, unk, and known barcode pairs
     writes out reads to unk, known, and hopped files
     """
+    return permutedict, unkhopknown_dict 
 
 # input: R1, R2, R3, R4
 # output: known files, unknown files, hopped files, dict of {unk: 10, known: 20, hopped: 12}
