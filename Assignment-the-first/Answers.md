@@ -84,10 +84,14 @@ def demultiplex(R1, R2, R3, R4):
         while True: 
             readline for R2, R3, R1, and R4 and add to current record lists 
             add barcodes to ends of header lines 
+            remember to strip!
 
             if len(current record) == 4: # we are at the end of a record 
 
-                if bioinfo.qualscore(qual line of barcodes) is below cutoff: # check quality cuttoff first for barcode (set by histogram results)
+                if it is the end of the file (empty string for all four files): 
+                    break
+
+                elif bioinfo.qualscore(qual line of barcodes) is below cutoff: # check quality cuttoff first for barcode (set by histogram results)
                     write seq to R1_unk.fastq and R2_unk.fastq
                     unk+=1
 
@@ -113,8 +117,9 @@ def demultiplex(R1, R2, R3, R4):
                     write seq out to R1_unk.fastq and R2_unk.fastq 
                     unk+=1
 
-            if it is the end of the file (empty string for all four files): 
-                break
+write out hopped, known, unk to tab separated file
+
+            
 
 ```
 
@@ -149,7 +154,7 @@ def corrected_revcomp(seq1: str, seq2: str) -> str:
     return out
 
 # input: NATCG, CGNTA
-# output: CGATA (corrected reverse compliment of the first seq passed)
+# output: TATCG (corrected first seq passed)
 
 def create_index_dict(indices: list) -> dict: 
     """
