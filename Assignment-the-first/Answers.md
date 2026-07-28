@@ -73,27 +73,48 @@ this is a known barcode, so it would go into a R1 R2 file
 # No file names should have Ns in them 
 
 list of known barcodes = []
-dict of {barcodepair: 0, barcodepair: 0, unk: 0} # itertools to create all possible combinations of barcodes
+create_index_dict(list of indices) # itertools to create all possible combinations of barcodes
 
-with open (R2), with open (R3), with open(R1), with open(R4): 
-    current record = [],[],[],[] #four lists for current R2, R3, R1, and R4, will have max 4 items at any time 
-    while True: 
-        readline for R2, R3, R1, and R4 and add to current record lists 
-        add barcodes to ends of header lines 
-        if len(current record) == 4: # we are at the end of a record 
-            if bioinfo.qualscore(qual line of barcodes (and possibly sequence lines)) is above cutoff: # check quality cuttoff first for barcode (set by histogram results)
-                if either barcode has 'N': # check if has N, then check if corrected reverse compliment and in known barcodes
-                    if corrected_revcomp(barcode1, barcode2) and in known barcodes: write seq to {barcodes}_R1.fastq and {barcodes}_R2.fastq and update dict
-                    else: write seq to R1_unk.fastq and R2_unk.fastq and update dict
+def demultiplex(R1, R2, R3, R4): 
+    with open (R2), with open (R3), with open(R1), with open(R4): 
+        
+        hopped, known, unk = 0,0,0
+        current record = [],[],[],[] #four lists for current R2, R3, R1, and R4, will have max 4 items at any time 
+
+        while True: 
+            readline for R2, R3, R1, and R4 and add to current record lists 
+            add barcodes to ends of header lines 
+
+            if len(current record) == 4: # we are at the end of a record 
+
+                if bioinfo.qualscore(qual line of barcodes) is below cutoff: # check quality cuttoff first for barcode (set by histogram results)
+                    write seq to R1_unk.fastq and R2_unk.fastq
+                    unk+=1
+
+                elif either barcode has 'N': # check if has N, then check if corrected reverse compliment and in known barcodes
+                    if corrected_revcomp(barcode1, barcode2) and in known barcodes: 
+                        write seq to {barcodes}_R1.fastq and {barcodes}_R2.fastq and update dict
+                        known+=1
+                    else: 
+                        write seq to R1_unk.fastq and R2_unk.fastq 
+                        unk+=1
+
                 # check if barcodes are reverse compliment 
-                elif barcode1 == reverse_compliment(barcode2) and in known barcodes: write seq to {barcodes}_R1.fastq and {barcodes}_R2.fastq and update dict
+                elif barcode1 == reverse_compliment(barcode2) and in known barcodes: 
+                    write seq to {barcodes}_R1.fastq and {barcodes}_R2.fastq and update dict
+                    known+=1
+
                 # check if they are hopped 
-                elif barcode1 and barcode2 in known barcodes (but NOT revcomp): write seq to hopped_R1.fastq and hopped_R2.fastq and update dict
-                else: write seq out to R1_unk.fastq and R2_unk.fastq and update dict
-            else: # quality score is not above cutoff 
-                write seq out to R1_unk.fastq and R2_unk.fastq and update dict
-        if it is the end of the file (empty string for all four files): 
-            break
+                elif barcode1 and barcode2 in known barcodes: 
+                    write seq to hopped_R1.fastq and hopped_R2.fastq and update dict
+                    hopped+=1
+
+                else: 
+                    write seq out to R1_unk.fastq and R2_unk.fastq 
+                    unk+=1
+
+            if it is the end of the file (empty string for all four files): 
+                break
 
 ```
 
@@ -129,5 +150,28 @@ def corrected_revcomp(seq1: str, seq2: str) -> str:
 
 # input: NATCG, CGNTA
 # output: CGATA (corrected reverse compliment of the first seq passed)
+
+def create_index_dict(indices: list) -> dict: 
+    """
+    returns a dict of all possible combinations of indexes from a list 
+    keys are tuples, values are set to zero
+    """ 
+    out = {}
+    # use itertools to create dict 
+    return out
+
+# input: ATGC, GCTA
+# output: {(ATGC,GCTA): 0, (GCTA,ATGC): 0, (ATGC,ATGC): 0, (GCTA,GCTA): 0}
+
+def demultiplex(R1, R2, R3, R4): 
+    """
+    function that calls other functions and runs main program 
+    returns a dict of paired indices populated with ints of instances
+    also outputs a dict of instances of hopped, unk, and known barcode pairs
+    writes out reads to unk, known, and hopped files
+    """
+
+# input: R1, R2, R3, R4
+# output: known files, unknown files, hopped files, dict of {unk: 10, known: 20, hopped: 12}
      
 ```
