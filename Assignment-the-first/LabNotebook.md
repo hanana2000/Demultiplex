@@ -51,3 +51,29 @@ zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz | head -
 ```
 
 3. Determine the phred encoding for these data.
+
+```bash 
+zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R1_001.fastq.gz | head -100 | grep "#" | head -4
+A#A-<FJJJ<JJJJJJJJJJJJJJJJJFJJJJFFJJFJJJAJJJJ-AJJJJJJJFFJJJJJJFFA-7<AJJJFFAJJJJJF<F--JJJJJJF-A-F7JJJJ
+A#AAFJJJJJJJJJJFJJJJJJJJJJJJJJJJJJJJJJJJFJJJJJJJJJJJJJJAJJJJJJJJJJJJJJFJJJJJFFFFJJJJJJJJJJJJJJJJJJ77F
+A#AFFFJFJJFJJJJFJJJJJJJJAJJFJJJJJFJFJ7<FAFJJFJFJJFJFJJJFJAAJJJFJJJJJJJJJJJJJJJAJJJFAJJJJJFFJJJAJJJ<F-
+A#<AAFJFJJJJFJJFJJ7JFJJJFJFAJJ<FF<<JJ<JJ<F<JJFAJJFFFJJJJJJA--77FJ--<<-AA<<AFJJJJJJFJJJFFFJ-<7--7-FFFA
+```
+There are #'s in the quality score lines, which would mean this is phred 33. 
+
+
+
+notes for bash script: 
+
+```bash
+#SBATCH --account=bgmp                    # REQUIRED: which account to use
+#SBATCH --partition=bgmp                  # REQUIRED: which partition to use
+#SBATCH --cpus-per-task=8                 # optional: number of cpus, default is 1
+#SBATCH --job-name=spades_k77             # optional: job name
+#SBATCH --time=3:00:00                    # optional: time before timesout 
+
+# scancel <jobid>
+# sbatch <file name>
+# squeue -u hankap
+# history | tail -10
+```
