@@ -3,6 +3,8 @@
 ## Part 1
 1. Be sure to upload your Python script. Provide a link to it here:
 
+[R1](distribution1.py) [R2](distribution2.py) [R3](distribution3.py) [R4](distribution4.py)
+
 | File name | label | Read length | Phred encoding |
 |---|---|---|---|
 | 1294_S1_L008_R1_001.fastq.gz | read 1 | 101 | Phred 33 |
@@ -12,9 +14,12 @@
 
 2. Per-base NT distribution
     1. Use markdown to insert your 4 histograms here.
-    2. **YOUR ANSWER HERE**
-    3. **YOUR ANSWER HERE**
-    
+    2. [distribution_R1.png](distribution_R1.png)
+    3. [distribution_R2.png](distribution_R2.png)
+    4. [distribution_R3.png](distribution_R3.png)
+    5. [distribution_R4.png](distribution_R4.png)
+
+
 ## Part 2
 1. Define the problem
 
@@ -32,7 +37,7 @@ and two more FASTQ files with barcodes that were low quality or do not match the
 
 3. Upload your [4 input FASTQ files](../TEST-input_FASTQ) and your [>=6 expected output FASTQ files](../TEST-output_FASTQ).
 ```
-I just used the first entry in all 4 provided files 
+I used the first entry in all 4 provided files 
 
 ave quality scores for these lines: 
 
@@ -50,6 +55,8 @@ corrected reverse compliment:
 TCTTCGAC
 
 this is a known barcode, so it would go into a R1 R2 file
+
+I also included an unknown barcode, and hopped barcodes  
 ```
 [input R1](../TEST-input_FASTQ/R1_test.fq)
 [input R2](../TEST-input_FASTQ/R2_test.fq)
@@ -74,9 +81,15 @@ this is a known barcode, so it would go into a R1 R2 file
 
 list of known barcodes = []
 permutedict = create_index_dict(list of indices) # itertools to create all possible combinations of barcodes
+file_obj_dict{("ATCG","CGAT"): (fh_R1, fh_R2), ("GACT", "AGTC"): (fh_R1, fh_R2), ... } # list of all the opened write files to check if already opened 
 
+# the forward barcode (R2) should be reverse compliment of reverse (R3)
+# should not see any known barcodes in the R3 file
+# the 24 known barcodes can be the file names (48 files total for R1, R2)
+# then 4 unk + hopped files (2 each)
+# 52 total 
 def demultiplex(R1, R2, R3, R4, permutedict): 
-    with open (R2), with open (R3), with open(R1), with open(R4): 
+    with open (R2, 'r'), with open (R3, 'r'), with open(R1, 'r'), with open(R4, 'r'), with open (unk, 'w'), with open (hopped, 'w'): # opening all the read files and fixed name write files
         
         hopped, known, unk = 0,0,0
         current record = [],[],[],[] #four lists for current R2, R3, R1, and R4, will have max 4 items at any time 
@@ -118,6 +131,8 @@ def demultiplex(R1, R2, R3, R4, permutedict):
                     unk+=1
 
 write out hopped, known, unk to tab separated file
+for file in file_obj_dict: 
+    close each write file 
 
             
 
@@ -146,7 +161,7 @@ def reverse_compliment(seq: str) -> str:
 def corrected_revcomp(seq1: str, seq2: str) -> str: 
     """
     takes two sequences with 'N's and checks if they are reverse complimented 
-    returns the corrected rev comp if they are 
+    returns the corrected first barcode if they are 
     returns an empty string if they are not 
     """ 
     out = ""
@@ -179,5 +194,23 @@ def demultiplex(R1: str , R2: str, R3: str, R4: str, permutedict: dict) -> dict,
 
 # input: R1, R2, R3, R4
 # output: known files, unknown files, hopped files, dict of {unk: 10, known: 20, hopped: 12}
+
+def write_file(barcode1: str, barcode2: str, record: list) -> bool
+    """
+    takes two barcodes (forward and reverse) and a list with the record lines (4 lines)
+    and writes them out to a file, first checking if the file is already open
+    """
+    if file is already assigned in file_obj_dict: 
+        write record to file objects accessed by barcode from dict (should be {barcodes}_R1.fastq and {barcodes}_R2.fastq)
+        return True 
+    else: 
+        with open ({barcodes}_R1.fastq and {barcodes}_R2.fastq) as fh: 
+            add fh as a new value in the file obj dict 
+            write out to it 
+            return True 
+    return False 
+
+# input: ATCG, CGAT, [record lines]
+# output: file with name (ATCG_ATCG) with record lines written, and return "True"
      
 ```
