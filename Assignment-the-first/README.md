@@ -36,17 +36,27 @@ Please fill in your answers on [Answers.md](Answers.md)
     3. Determine the phred encoding for these data.
 2.	Generate a per base distribution of quality scores for read1, read2, index1, and index2. Average the quality scores at each position for all reads and generate a per nucleotide mean distribution **as you did in part 1 of PS4 in Bi621**. (NOTE! Do NOT use the 2D array strategy from PS9 - you WILL run out of memory!)
     1.	Turn in the 4 histograms.
-    2.	What is a good quality score cutoff for index reads and biological read pairs to utilize for sample identification and downstream analysis, respectively? Justify your answer.
-        - it looks like all the scores are at least above an average of 30, so I would do a cutoff of about 25 to make sure that we are including the majority of the scores of high quality. 25 is also still a high phred quality score, so it seems like a reasonable, trustworthy base score level. 
+    2.	What is a good quality score cutoff for index reads and biological read pairs to utilize for sample identification and downstream analysis, respectively? Justify your answer.  
+
+        - it looks like all the scores are at least above an average of 30, so I would do a cutoff of about 25 to make sure that we are including the majority of the scores of high quality. 25 is also still a high phred quality score, so it seems like a reasonable, trustworthy base score level.  
+
     3.	How many indexes have undetermined (N) base calls? (Utilize your command line tool knowledge. Submit the command(s) you used. CHALLENGE: use a one-line command)
         
-        - zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
-        - zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
-        - 3976613 + 3328051 = 7304664
+        ```
+        zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
+        ```
+        ```
+        zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
+        ```
+        ```
+        3976613 + 3328051 = 7304664
+        ```
 
         one line soln: 
-        - zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
-        - 7304664
+        ```
+        zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
+        ```
+        ```7304664```
 
 ## Part 2 – Develop an algorithm to de-multiplex the samples
 Write up a strategy (**NOT A SCRIPT**) for writing an algorithm to de-multiplex files and reporting index-hopping. That is, given four input FASTQ files (2 with biological reads, 2 with index reads) and the 24 known indexes above, demultiplex reads by index-pair, outputting:
