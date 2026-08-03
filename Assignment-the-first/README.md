@@ -37,16 +37,22 @@ Please fill in your answers on [Answers.md](Answers.md)
 2.	Generate a per base distribution of quality scores for read1, read2, index1, and index2. Average the quality scores at each position for all reads and generate a per nucleotide mean distribution **as you did in part 1 of PS4 in Bi621**. (NOTE! Do NOT use the 2D array strategy from PS9 - you WILL run out of memory!)
     1.	Turn in the 4 histograms.
     2.	What is a good quality score cutoff for index reads and biological read pairs to utilize for sample identification and downstream analysis, respectively? Justify your answer.
+        - it looks like all the scores are at least above an average of 30, so I would do a cutoff of about 25 to make sure that we are including the majority of the scores of high quality. 25 is also still a high phred quality score, so it seems like a reasonable, trustworthy base score level. 
     3.	How many indexes have undetermined (N) base calls? (Utilize your command line tool knowledge. Submit the command(s) you used. CHALLENGE: use a one-line command)
+        
+        - zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
+        - zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
+        - 3976613 + 3328051 = 7304664
+
+        one line soln: 
+        - zcat /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz | awk 'NR % 4 == 2' | grep -c "N"
+        - 7304664
 
 ## Part 2 – Develop an algorithm to de-multiplex the samples
 Write up a strategy (**NOT A SCRIPT**) for writing an algorithm to de-multiplex files and reporting index-hopping. That is, given four input FASTQ files (2 with biological reads, 2 with index reads) and the 24 known indexes above, demultiplex reads by index-pair, outputting:
 
 - one R1 FASTQ file and one R2 FASTQ file **per** matching index-pair, 
-- another two FASTQ files for non-matching index-pairs (index-hopping), and 
-- two additional FASTQ files when one or both index reads are unknown or low quality (do not match the 24 known indexes [this includes indexes with 'N's in them] or do not meet a quality score cutoff)
-    
-Add the sequence of the index-pair to the header of BOTH reads in all of your FASTQ files for all categories (e.g. add “AAAAAAAA-CCCCCCCC” to the end of headers of every read pair that had an index1 of AAAAAAAA and an index2 of CCCCCCCC; this pair of reads would be in the unknown category as one or both of these indexes do not match the 24 known indexes).
+- another two FASTQ file of your FASTQ files for all categories (e.g. add “AAAAAAAA-CCCCCCCC” to the end of headers of every read pair that had an index1 of AAAAAAAA and an index2 of CCCCCCCC; this pair of reads would be in the unknown category as one or both of these indexes do not match the 24 known indexes).
 
 Additionally, your algorithm should report: 
 - the number of read-pairs with properly matched indexes (per index-pair), 
@@ -67,7 +73,10 @@ You should strive to report values for each possible pair of indexes (both swapp
     - Description/doc string – What does this function do?
     - Test examples for individual functions
     - Return statement
-    - Example: If you were planning to write the function ```convert_phred()```, you would include something like
+    - Example: If you were planning to write the function ```convert_phred()```, you would include something likes for non-matching index-pairs (index-hopping), and 
+- two additional FASTQ files when one or both index reads are unknown or low quality (do not match the 24 known indexes [this includes indexes with 'N's in them] or do not meet a quality score cutoff)
+    
+Add the sequence of the index-pair to the header of BOTH reads in all
       ```python
       def convert_phred(letter: str) -> int:
           '''Takes a single ASCII character (string) encoded in Phred+33 and
