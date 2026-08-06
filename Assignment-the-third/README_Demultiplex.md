@@ -154,6 +154,7 @@ All heatmaps look generally the same regardless of cutoff or N correction.
 ## Barchart generation 
 
 barcharts were generated using matplotlib bar.
+These are barcharts showing the percentage of matched barcodes per each of the 24 out of the total number of barcodes observed. 
 
 [barcharts python script](barchart.py)
 
