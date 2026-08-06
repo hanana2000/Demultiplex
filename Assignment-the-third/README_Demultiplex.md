@@ -194,6 +194,6 @@ matched for N - matched for non-N =
 3,819,817 barcodes saved!
 
 ```
-over 3.8 million matched barcodes were recovered through N correcting.
+over 3.8 million matched barcodes were recovered through N correcting!
 
 
