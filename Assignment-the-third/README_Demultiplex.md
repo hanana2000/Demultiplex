@@ -167,7 +167,7 @@ These are barcharts showing the percentage of matched barcodes per each of the 2
 
 All barcharts look generally the same regardless of cutoff or N correction.
 
-## Comparing N correction vs Non N correction
+## Comparing N correction vs Non-N correction
 
 For this comparison I will only consider the no cutoff runs. 
 
