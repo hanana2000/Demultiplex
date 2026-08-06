@@ -167,3 +167,33 @@ These are barcharts showing the percentage of matched barcodes per each of the 2
 
 All barcharts look generally the same regardless of cutoff or N correction.
 
+## Comparing N correction vs Non N correction
+
+For this comparison I will only consider the no cutoff runs. 
+
+for non-N correction: 
+```
+total num records: 363246735
+known barcode records: 331755033
+hopped barcode records: 707740
+unknown barcode records: 30783962
+```
+
+for N correction: 
+```
+total num records: 363246735
+known barcode records: 335574850
+hopped barcode records: 716398
+unknown barcode records: 26955487
+```
+
+The N correction was able to recover many barcodes that were previously unknown: 
+```
+matched for N - matched for non-N = 
+335574850 - 331755033 = 
+3819817 barcodes saved!
+
+```
+over 3.5 million matched barcodes were recovered through N correcting.
+
+
