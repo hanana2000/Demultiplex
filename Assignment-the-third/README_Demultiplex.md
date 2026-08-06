@@ -25,10 +25,35 @@ usage: demultiplex.py [-h] -R1 R1 -R2 R2 -R3 R3 -R4 R4 -o OUTPATH -k KNOWNBARCS 
 demultiplex.py: error: the following arguments are required: -R1/--R1, -R2/--R2, -R3/--R3, -R4/--R4, -o/--outpath, -k/--knownbarcs, -f/--outfilename
 
 ```
+
+If you run with -h: 
+
+```bash 
+[hankap@login3 Assignment-the-third]$ ./demultiplex.py -h 
+usage: demultiplex.py [-h] -R1 R1 -R2 R2 -R3 R3 -R4 R4 -o OUTPATH -k KNOWNBARCS [-c PHREDCUTOFF] -f OUTFILENAME
+
+A program to demultiplex 4 illumina sequencing files
+
+options:
+  -h, --help            show this help message and exit
+  -R1, --R1 R1          R1 file path
+  -R2, --R2 R2          R2 file path
+  -R3, --R3 R3          R3 file path
+  -R4, --R4 R4          R4 file path
+  -o, --outpath OUTPATH
+                        path to output dir where subfolder will be created, with NO '/' at the end
+  -k, --knownbarcs KNOWNBARCS
+                        path to known barcodes tsv with format of 'A12 TCGACAAG' on each line
+  -c, --phredcutoff PHREDCUTOFF
+                        int indicated minimum average phred score for barcodes
+  -f, --outfilename OUTFILENAME
+                        name of stats file
+```
+
 - the R1, R2, R3, and R4 flags are for the four file paths to the sequence and barcode files 
 - the -o flag is for the output directory path 
 - the -k flag is for the path to the known barcodes tsv file 
-- the -c flag is for the desired phred cutoff (default is 25, not a required flag)
+- the -c flag is for the desired phred cutoff (default is 25, not a required flag). The programs will check if the quality score is LESS THAN the provided argument. It is inclusive of the passed qual score cutoff. 
 - the -f flag is for the desired output stats file name. This will contain stats like totals and percentages. 
 
 ## Runs performed 
@@ -105,6 +130,7 @@ percentage of AGGATAGC reads: 2.387682851437054%
 ## Visualizing with heatmaps
 
 heatmaps were generated using matplotlib imshow.
+both normal and logarithmic scaled were graphed. 
 
 [visualizing python script](visualizing.py)
 
@@ -114,6 +140,14 @@ heatmaps were generated using matplotlib imshow.
 ![Ncorr_nocut](heatmaps/Ncorr_nocut.png)  
 ![Ncorr_cut25](heatmaps/Ncorr_cut25.png)  
 ![Ncorr_cut30](heatmaps/Ncorr_cut30.png)
+
+
+![log_nocut](heatmaps/log_nocut.png)   
+![log_cut25](heatmaps/log_cut25.png)   
+![log_cut30](heatmaps/log_cut30.png)   
+![log_Ncorr_nocut](heatmaps/log_Ncorr_nocut.png)   
+![log_Ncorr_cut25](heatmaps/log_Ncorr_cut25.png)   
+![log_Ncorr_cut30](heatmaps/log_Ncorr_cut30.png)
 
 All heatmaps look generally the same regardless of cutoff or N correction. 
 
@@ -130,5 +164,5 @@ barcharts were generated using matplotlib bar.
 ![Ncorrect_cut25_chart](barcharts/Ncorrect_cut25_chart.png)  
 ![Ncorrect_cut30_chart](barcharts/Ncorrect_cut30_chart.png)
 
-All barcharts look generally the same regardless of cutoff or N correction. 
+All barcharts look generally the same regardless of cutoff or N correction.
 

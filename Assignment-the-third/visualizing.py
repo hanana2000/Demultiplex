@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import itertools
 import os
 import re 
+from matplotlib.colors import LogNorm
 
 # ./visualizing.py -i stats_demultiplex_nocut.txt -o . -k known_barcodes.tsv -f test.png
 
@@ -25,6 +26,12 @@ import re
 ./visualizing.py -i stats_demultiplex_Ncorrect_30.txt -o . -k known_barcodes.tsv -f Ncorr_cut30.png
 ./visualizing.py -i stats_demultiplex_Ncorrect.txt -o . -k known_barcodes.tsv -f Ncorr_cut25.png
 ./visualizing.py -i stats_demultiplex_Ncorrect_nocut.txt -o . -k known_barcodes.tsv -f Ncorr_nocut.png
+
+
+example command for after moving stats files to stats_txt_files/ : 
+
+./visualizing.py -i stats_txt_files/stats_demultiplex.txt -o . -k known_barcodes.tsv -f cut25.png
+
 """
 
 def get_args():
@@ -125,6 +132,12 @@ plt.colorbar(im) # Add a colorbar to show value mapping
 plt.title(f'2-D Heat Map for {outfilename.replace('.png','')}')
 plt.subplots_adjust(top=0.90)
 plt.savefig(f"{outpath}/{outfilename}")
+
+# norm=LogNorm()
+
+im = ax.imshow(totalarray, norm=LogNorm())
+plt.savefig(f"{outpath}/log_{outfilename}")
+
 
 
 
