@@ -171,6 +171,8 @@ All barcharts look generally the same regardless of cutoff or N correction.
 
 For this comparison I will only consider the no cutoff runs. 
 
+### matched barcodes totals 
+
 for non-N correction: 
 ```
 total num records: 363246735
@@ -196,4 +198,9 @@ matched for N - matched for non-N =
 ```
 over 3.8 million matched barcodes were recovered through N correcting!
 
+### matched barcodes (per barcode)
+
+![comparing noN corr to N corr per barcode](barcharts/noN_N_nocutcompare_chart.png)
+
+Per barcode, it did not seem that N correcting favored any one barcode over the other. It also does not look like N correcting saved a significant amount of barcodes per barcode. 
 
