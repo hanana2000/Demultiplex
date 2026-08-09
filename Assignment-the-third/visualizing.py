@@ -28,9 +28,9 @@ from matplotlib.colors import LogNorm
 ./visualizing.py -i stats_demultiplex_Ncorrect_nocut.txt -o . -k known_barcodes.tsv -f Ncorr_nocut.png
 
 
-example command for after moving stats files to stats_txt_files/ : 
+example command for after moving stats files to stats_txt_files/ and output to heatmaps/: 
 
-./visualizing.py -i stats_txt_files/stats_demultiplex.txt -o . -k known_barcodes.tsv -f cut25.png
+./visualizing.py -i stats_txt_files/stats_demultiplex.txt -o ./heatmaps/ -k known_barcodes.tsv -f cut25.png
 
 """
 
@@ -129,7 +129,7 @@ ax.set_xlabel('Second Barcode')
 ax.set_ylabel('First Barcode')
 plt.tight_layout()
 plt.colorbar(im) # Add a colorbar to show value mapping
-plt.title(f'2-D Heat Map for {outfilename.replace('.png','')}')
+plt.title(f'2-D Heat Map for {outfilename.replace('.png','').split('/')[-1]}')
 plt.subplots_adjust(top=0.90)
 plt.savefig(f"{outpath}/{outfilename}")
 
