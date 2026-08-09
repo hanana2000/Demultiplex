@@ -99,7 +99,7 @@ ax.set_xticks(range(len(barcs_list)), labels=barcs_list,
 # ax.set_yticks(range(len(barcs_list)), labels=barcs_list)
 # plt.bar(xvals, yvals)
 plt.tight_layout()
-plt.title(f"Barchart of known barc percentages for {outfilename.replace(".png","").replace("_chart","")}")
+plt.title(f"Barchart of known barc percentages for {outfilename.replace(".png","").replace("_chart","").split('/')[-1]}")
 ax.set_xlabel("Barcodes")
 ax.set_ylabel("Percentages")
 plt.subplots_adjust(top=0.90, left=.12, bottom=.25)

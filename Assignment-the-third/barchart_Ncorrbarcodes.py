@@ -93,9 +93,9 @@ ax.bar(x + w/2, y_N, width=w, label='N correction')
 ax.set_ylabel("Number Observed")
 ax.set_xticks(x, labels=barcs_list, rotation=90, rotation_mode="xtick")
 ax.set_xticklabels(xvals)
-ax.set_title(f"Barchart of matched barcs for {outfilename.replace(".png","").replace("_chart","").replace("_", " ")}")
+ax.set_title(f"Barchart of matched barcs for {outfilename.replace(".png","").replace("_chart","").replace("_", "-").split('/')[-1]}")
 ax.legend()
 plt.subplots_adjust(top=0.90, left=.12, bottom=.25)
 
-plt.savefig(outfilename)
+plt.savefig(f"{outpath}/{outfilename}")
 
