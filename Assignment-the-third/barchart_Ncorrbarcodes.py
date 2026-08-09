@@ -22,9 +22,9 @@ import re
 """
 
 def get_args():
-    parser = argparse.ArgumentParser(description="A program to visualize the demultiplexing stats")
+    parser = argparse.ArgumentParser(description="A program to visualize the demultiplexing stats between two runs")
     parser.add_argument("-i1", "--infile1", help="stats1 file path", required=True, type=str)
-    parser.add_argument("-i2", "--infile2", help="stats1 file path", required=True, type=str)
+    parser.add_argument("-i2", "--infile2", help="stats2 file path", required=True, type=str)
     parser.add_argument("-o", "--outpath", help="path to output dir where subfolder will be created, with NO '/' at the end", required=True, type=str, default=None)
     parser.add_argument("-k", "--knownbarcs", help="path to known barcodes tsv with format of 'A12	TCGACAAG' on each line", required=True, type=str, default=None)
     parser.add_argument("-f", "--outfilename", help="name of out file", required=True, type=str, default=None)

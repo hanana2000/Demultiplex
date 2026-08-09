@@ -7,11 +7,11 @@
  [No N correction python script](demultiplex.py)   
  [N correction python script](demultiplex_Ncorrections.py)
  
- - One sends all entries with barcode that contain any Ns to unknown. 
+ - One sends all entries with barcodes that contain any Ns to unknown. 
  - The other categorizes barcodes with 2 or fewer Ns (3 or more N's get sent to unknown)
-    - It will match the N barcode to a barcode from known barcodes 
-    - if it does not match, it is unk
-    - if it does match and they are reverse compliment, it is known 
+    - It will match the pair of N barcodes to a barcode from known 
+    - if they do not not match, it is unk
+    - if they do match and they are reverse compliment, it is known 
     - if they both match but are not reverse compliment, it is hopped 
 
 Both programs take the same flags. 
@@ -20,7 +20,7 @@ Both programs take the same flags.
 
 If you run without any flags, the program will output the following: 
 ```bash 
-[hankap@login3 Assignment-the-third]$ ./demultiplex.py 
+./demultiplex.py 
 usage: demultiplex.py [-h] -R1 R1 -R2 R2 -R3 R3 -R4 R4 -o OUTPATH -k KNOWNBARCS [-c PHREDCUTOFF] -f OUTFILENAME
 demultiplex.py: error: the following arguments are required: -R1/--R1, -R2/--R2, -R3/--R3, -R4/--R4, -o/--outpath, -k/--knownbarcs, -f/--outfilename
 
@@ -127,12 +127,32 @@ percentage of AGAGTCCA reads: 3.1154526413017862%
 percentage of AGGATAGC reads: 2.387682851437054%
 ```
 
+The sample with the highest number/percentage of reads had a barcode of TACCGGAT. 
+
 ## Visualizing with heatmaps
 
 heatmaps were generated using matplotlib imshow.
 both normal and logarithmic scaled were graphed. 
 
 [visualizing python script](visualizing.py)
+
+help message with -h: 
+```bash 
+./visualizing.py -h
+usage: visualizing.py [-h] -i INFILE -o OUTPATH -k KNOWNBARCS -f OUTFILENAME
+
+A program to visualize the demultiplexing stats
+
+options:
+  -h, --help            show this help message and exit
+  -i, --infile INFILE   stats file path
+  -o, --outpath OUTPATH
+                        path to output dir where subfolder will be created, with NO '/' at the end
+  -k, --knownbarcs KNOWNBARCS
+                        path to known barcodes tsv with format of 'A12 TCGACAAG' on each line
+  -f, --outfilename OUTFILENAME
+                        name of out file
+```
 
 ![nocut](heatmaps/nocut.png)  
 ![cut25](heatmaps/cut25.png)  
@@ -158,6 +178,24 @@ These are barcharts showing the percentage of matched barcodes per each of the 2
 
 [barcharts python script](barchart.py)
 
+help message with -h: 
+```bash 
+./barchart.py -h
+usage: barchart.py [-h] -i INFILE -o OUTPATH -k KNOWNBARCS -f OUTFILENAME
+
+A program to visualize the demultiplexing stats
+
+options:
+  -h, --help            show this help message and exit
+  -i, --infile INFILE   stats file path
+  -o, --outpath OUTPATH
+                        path to output dir where subfolder will be created, with NO '/' at the end
+  -k, --knownbarcs KNOWNBARCS
+                        path to known barcodes tsv with format of 'A12 TCGACAAG' on each line
+  -f, --outfilename OUTFILENAME
+                        name of out file
+```
+
 ![nocut_chart](barcharts/nocut_chart.png)  
 ![cut25_chart](barcharts/cut25_chart.png)  
 ![cut30_chart](barcharts/cut30_chart.png)  
@@ -165,7 +203,7 @@ These are barcharts showing the percentage of matched barcodes per each of the 2
 ![Ncorrect_cut25_chart](barcharts/Ncorrect_cut25_chart.png)  
 ![Ncorrect_cut30_chart](barcharts/Ncorrect_cut30_chart.png)
 
-All barcharts look generally the same regardless of cutoff or N correction.
+All barcharts look generally the same regardless of cutoff or N correction. However, it can be noted that the higher cutoffs (phred 30) have a highest percentage of below 20, and the N correction percentages are sligtly higher overall. 
 
 ## Comparing N correction vs Non-N correction
 
@@ -199,6 +237,29 @@ matched for N - matched for non-N =
 over 3.8 million matched barcodes were recovered through N correcting!
 
 ### matched barcodes (per barcode)
+
+[comparison barcharts python script](barchart_Ncorrbarcodes.py)
+
+help message with -h: 
+```bash 
+./barchart_Ncorrbarcodes.py -h
+usage: barchart_Ncorrbarcodes.py [-h] -i1 INFILE1 -i2 INFILE2 -o OUTPATH -k KNOWNBARCS -f OUTFILENAME
+
+A program to visualize the demultiplexing stats between two runs
+
+options:
+  -h, --help            show this help message and exit
+  -i1, --infile1 INFILE1
+                        stats1 file path
+  -i2, --infile2 INFILE2
+                        stats2 file path
+  -o, --outpath OUTPATH
+                        path to output dir where subfolder will be created, with NO '/' at the end
+  -k, --knownbarcs KNOWNBARCS
+                        path to known barcodes tsv with format of 'A12 TCGACAAG' on each line
+  -f, --outfilename OUTFILENAME
+                        name of out file
+```
 
 ![comparing noN corr to N corr per barcode](barcharts/noN_N_nocutcompare_chart.png)
 
